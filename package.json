@@ -1,0 +1,17 @@
+{
+  "name": "mimbo",
+  "version": "1.0.0",
+  "description": "project for mimbo interview",
+  "main": "index.js",
+  "repository": "git@github.com:alvinMemphis/mimbo-backend.git",
+  "author": "alvinmemphis <alvinnsongambi9@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts":{
+
+	  "start":"node index.js"
+  },
+  "dependencies": {
+    "sqlite3": "^5.0.2"
+  }
+}
