@@ -6,6 +6,7 @@ const port = "3000";
 const sqlite3 = require("sqlite3").verbose();
 const users = require("./controllers/users");
 const hairs = require("./controllers/hairstyles");
+const makeup = require("./controllers/makeup");
 let db = new sqlite3.Database(
   "./db/sqlite.db",
   sqlite3.OPEN_READWRITE,
@@ -27,20 +28,19 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify(mhairs));
       //end the response
       break;
-    case "/makeup_tags":
-      const makeup_tags = await users.getUsers(db);
+    case "/makeup":
+      const makeup_tags = await makeup.getMakeupTags(db);
       //response headers
       res.writeHead(200, { "Content-Type": "application/json" });
       //set the response
       res.end(JSON.stringify(makeup_tags));
       //end the response
       break;
-    case "/users/tags":
       const musers_tags = await users.getUsers(db);
       //response headers
       res.writeHead(200, { "Content-Type": "application/json" });
       //set the response
-      res.end(JSON.stringify(musers));
+      res.end("matched perfect");
       //end the response
       break;
     case "/users":
@@ -52,11 +52,19 @@ const server = http.createServer(async (req, res) => {
       //end the response
       break;
     default:
-      res.writeHead(200, { "Content-Type": "application/json" });
-      //set the response
-      res.write("Hi there, This is a Vanilla Node.js API");
-      //end the response
-      res.end();
+      if (req.url.match(/\/users\/[0-9]+\/tags\/*$/)) {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        //set the response
+        res.write("Returns tags");
+        //end the response
+        res.end();
+      } else {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        //set the response
+        res.write("Route not found");
+        //end the response
+        res.end();
+      }
   }
 });
 
