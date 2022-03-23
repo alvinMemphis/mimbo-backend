@@ -1,5 +1,6 @@
 # hair style api  
 
-####running application
+
+###running application
 `node app.js`
 
