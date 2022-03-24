@@ -1,5 +1,5 @@
 async function getMakeupTags(db) {
-  let sql = `SELECT DISTINCT name hair_tags FROM hair_styles
+  let sql = `SELECT DISTINCT name name FROM tags WHERE type='makeup'
            ORDER BY name`;
 
   let users = [];
