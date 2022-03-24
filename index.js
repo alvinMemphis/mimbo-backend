@@ -55,9 +55,10 @@ const server = http.createServer(async (req, res) => {
       if (req.url.match(/\/users\/[0-9]+\/tags\/*$/)) {
         res.writeHead(200, { "Content-Type": "application/json" });
         //set the response
-        res.write("Returns tags");
         //end the response
-        res.end();
+        user_id = req.url.split("/")[2];
+        user_tags = await users.getUserTags(user_id, db);
+        res.end(JSON.stringify(user_tags));
       } else {
         res.writeHead(200, { "Content-Type": "application/json" });
         //set the response
