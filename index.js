@@ -43,6 +43,15 @@ const server = http.createServer(async (req, res) => {
       res.end("matched perfect");
       //end the response
       break;
+    case "/users/tags":
+      const mtags = await users.getAllTags(db);
+      //response headers
+      res.writeHead(200, { "Content-Type": "application/json" });
+      //set the response
+      res.end(JSON.stringify(mtags));
+      //end the response
+      break;
+
     case "/users":
       const musers = await users.getUsers(db);
       //response headers
