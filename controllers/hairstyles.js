@@ -8,11 +8,24 @@ async function getTag(db, type, tag) {
       if (err) {
         reject(err);
       }
+      if (rows.length > 0) {
+        resolve(rows);
+      } else {
+        if (type === "hairstyle" || type === "makeup") {
+          new_sql = `INSERT INTO tags (type,name) VALUES (?, ?)`;
 
-      resolve(rows);
+          db.run(new_sql, [type, tag], (err) => {
+            if (err) {
+              reject(err.message);
+            }
+
+            resolve("new valuesaved");
+          });
+        } else {
+          reject("incorrect type ");
+        }
+      }
     });
-
-    // close the database connection
   });
 }
 

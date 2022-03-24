@@ -67,10 +67,14 @@ const server = http.createServer(async (req, res) => {
         //set the response
         //end the response
 
-        let qs = req.url.split("?");
-        let params = querystring.parse(qs[1]);
-        user_tags = await hairs.getTag(db, params.type, params.tag);
-        res.end(JSON.stringify(user_tags));
+        try {
+          let qs = req.url.split("?");
+          let params = querystring.parse(qs[1]);
+          user_tags = await hairs.getTag(db, params.type, params.tag);
+          res.end(JSON.stringify(user_tags));
+        } catch (e) {
+          console.log("an error ocurred :", e);
+        }
       } else {
         res.writeHead(200, { "Content-Type": "application/json" });
         //set the response
