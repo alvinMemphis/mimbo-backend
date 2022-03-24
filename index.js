@@ -19,6 +19,7 @@ let db = new sqlite3.Database(
 );
 
 const server = http.createServer(async (req, res) => {
+  console.log("here is the url :", req.url);
   switch (req.url) {
     case "/hairstyles":
       const mhairs = await hairs.getHairTags(db);
@@ -61,13 +62,15 @@ const server = http.createServer(async (req, res) => {
       //end the response
       break;
     default:
-      if (req.url.match(/\/users\/[0-9]+\/tags\/*$/)) {
+      if (req.url.match(/\api\/tag|(\?|\&)([^=]+)\=([^\&]+)/)) {
         res.writeHead(200, { "Content-Type": "application/json" });
         //set the response
         //end the response
+        let tag;
+        let type;
         user_id = req.url.split("/")[2];
-        user_tags = await users.getUserTags(user_id, db);
-        res.end(JSON.stringify(user_tags));
+        //user_tags = await users.getTag(db, type, tag);
+        res.end("emotional damage");
       } else {
         res.writeHead(200, { "Content-Type": "application/json" });
         //set the response
