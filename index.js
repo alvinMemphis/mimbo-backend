@@ -1,5 +1,5 @@
 const http = require("http");
-
+const querystring = require("querystring");
 const host = "127.0.0.1";
 const port = "3000";
 
@@ -66,11 +66,11 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(200, { "Content-Type": "application/json" });
         //set the response
         //end the response
-        let tag;
-        let type;
-        user_id = req.url.split("/")[2];
-        //user_tags = await users.getTag(db, type, tag);
-        res.end("emotional damage");
+
+        let qs = req.url.split("?");
+        let params = querystring.parse(qs[1]);
+        user_tags = await hairs.getTag(db, params.type, params.tag);
+        res.end(JSON.stringify(user_tags));
       } else {
         res.writeHead(200, { "Content-Type": "application/json" });
         //set the response
