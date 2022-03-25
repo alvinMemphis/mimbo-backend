@@ -43,7 +43,6 @@ async function getHairTags(db) {
     });
 
     // close the database connection
-    db.close();
   });
 }
 
