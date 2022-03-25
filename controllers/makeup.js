@@ -11,9 +11,6 @@ async function getMakeupTags(db) {
 
       resolve(rows);
     });
-
-    // close the database connection
-    db.close();
   });
 }
 

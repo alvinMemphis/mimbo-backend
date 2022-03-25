@@ -20,11 +20,19 @@ let db = new sqlite3.Database(
 
 const server = http.createServer(async (req, res) => {
   console.log("here is the url :", req.url);
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
+    "Access-Control-Max-Age": 2592000, // 30 days
+    "Content-Type": "application/json",
+    /** add other headers as per requirement */
+  };
+  res.writeHead(200, headers);
+  //response headers
   switch (req.url) {
     case "/hairstyles":
       const mhairs = await hairs.getHairTags(db);
       //response headers
-      res.writeHead(200, { "Content-Type": "application/json" });
       //set the response
       res.end(JSON.stringify(mhairs));
       //end the response
@@ -32,22 +40,18 @@ const server = http.createServer(async (req, res) => {
     case "/makeup":
       const makeup_tags = await makeup.getMakeupTags(db);
       //response headers
-      res.writeHead(200, { "Content-Type": "application/json" });
       //set the response
       res.end(JSON.stringify(makeup_tags));
       //end the response
       break;
       const musers_tags = await users.getUsers(db);
       //response headers
-      res.writeHead(200, { "Content-Type": "application/json" });
       //set the response
       res.end("matched perfect");
       //end the response
       break;
     case "/users/tags":
       const mtags = await users.getAllTags(db);
-      //response headers
-      res.writeHead(200, { "Content-Type": "application/json" });
       //set the response
       res.end(JSON.stringify(mtags));
       //end the response
@@ -55,18 +59,12 @@ const server = http.createServer(async (req, res) => {
 
     case "/users":
       const musers = await users.getUsers(db);
-      //response headers
-      res.writeHead(200, { "Content-Type": "application/json" });
       //set the response
       res.end(JSON.stringify(musers));
       //end the response
       break;
     default:
       if (req.url.match(/\api\/tag|(\?|\&)([^=]+)\=([^\&]+)/)) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        //set the response
-        //end the response
-
         try {
           let qs = req.url.split("?");
           let params = querystring.parse(qs[1]);
