@@ -1,4 +1,4 @@
-async function getTag(db, type, tag) {
+async function postTag(db, type, tag) {
   let sql = `SELECT DISTINCT name name FROM tags WHERE type='${type}' AND name LIKE '%${tag}' ORDER BY name`;
 
   let users = [];
@@ -25,6 +25,21 @@ async function getTag(db, type, tag) {
           reject("incorrect type ");
         }
       }
+    });
+  });
+}
+
+async function getTag(db, type, tag) {
+  let sql = `SELECT DISTINCT name name FROM tags WHERE type='${type}' AND name LIKE '%${tag}' ORDER BY name`;
+
+  let users = [];
+
+  return new Promise((resolve, reject) => {
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(rows);
     });
   });
 }
